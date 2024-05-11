@@ -1,6 +1,5 @@
 import 'package:app/router/router.dart';
 import 'package:flutter/material.dart';
-import 'package:app/routes/app_router.dart';
 
 class Application extends StatefulWidget {
   @override
@@ -15,7 +14,7 @@ class _ApplicationState extends State<Application> {
     return MaterialApp.router(
       title: 'Flutter Demo',
       
-      // routerConfig: _router.config(),
+      routerConfig: _router.config(),
     );
   }
 }
