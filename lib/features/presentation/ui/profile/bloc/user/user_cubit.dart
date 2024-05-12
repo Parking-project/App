@@ -9,7 +9,10 @@ class UserCubit extends Cubit<UserState> {
   final UserRepository _repo;
   UserCubit(this._repo) : super(const UserInitial(userData: null));
 
-  void init() async {
+  void init() {
+  }
+  
+  void load() async {
     final result = await _repo.getUser();
     result.fold((l) => emit(const UserException(userData: null)),
         (user) => emit(UserSuccess(userData: user)));
@@ -17,7 +20,7 @@ class UserCubit extends Cubit<UserState> {
 
   Future<void> reload() async{
     emit(const UserLoading(userData: null));
-    init();
+    load();
   }
 
   UserEntity get user => state.userData?? UserEntity(displayName: "None", login: "None");
