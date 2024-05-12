@@ -8,5 +8,5 @@ Future<void> main() async {
   // await init();
   await dotenv.load(fileName: ".env");
   await init();
-  runApp(Application());
+  runApp(const Application());
 }
