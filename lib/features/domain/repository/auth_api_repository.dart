@@ -7,4 +7,9 @@ abstract class AuthRepository {
     String login,
     String password
   );
+  Future<Either<Fauiler, AuthEntity>> registration(
+    String login,
+    String displayName,
+    String password
+  );
 }
