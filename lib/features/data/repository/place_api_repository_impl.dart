@@ -1,7 +1,7 @@
 import 'package:app/features/data/mapper/place_api_mapper.dart';
 import 'package:app/features/data/model/place_api_entity.dart';
 import 'package:app/features/domain/entity/place_api_entity.dart';
-import 'package:app/features/domain/repository/place_api_entity.dart';
+import 'package:app/features/domain/repository/place_api_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:app/core/error/failure.dart';
