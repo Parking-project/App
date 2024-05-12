@@ -18,7 +18,7 @@ abstract class _$AppRouter extends RootStackRouter {
     HomeRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const HomeScreen(),
+        child: HomeScreen(),
       );
     },
     PasswordChangeRoute.name: (routeData) {
@@ -45,10 +45,17 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const PlaceSetScreen(),
       );
     },
-    RegisterRoute.name: (routeData) {
+    ProfileRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const RegisterScreen(),
+        child: ProfileScreen(),
+      );
+    },
+    RegisterRoute.name: (routeData) {
+      final args = routeData.argsAs<RegisterRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: RegisterScreen(onResult: args.onResult),
       );
     },
     ReserveHistoryRoute.name: (routeData) {
@@ -76,15 +83,10 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     SignInRoute.name: (routeData) {
+      final args = routeData.argsAs<SignInRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const SignInScreen(),
-      );
-    },
-    SplashRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: SplashScreen(),
+        child: SignInScreen(onResult: args.onResult),
       );
     },
     SupportChatRoute.name: (routeData) {
@@ -173,17 +175,46 @@ class PlaceSetRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [RegisterScreen]
-class RegisterRoute extends PageRouteInfo<void> {
-  const RegisterRoute({List<PageRouteInfo>? children})
+/// [ProfileScreen]
+class ProfileRoute extends PageRouteInfo<void> {
+  const ProfileRoute({List<PageRouteInfo>? children})
       : super(
+          ProfileRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ProfileRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [RegisterScreen]
+class RegisterRoute extends PageRouteInfo<RegisterRouteArgs> {
+  RegisterRoute({
+    required dynamic Function(bool?) onResult,
+    List<PageRouteInfo>? children,
+  }) : super(
           RegisterRoute.name,
+          args: RegisterRouteArgs(onResult: onResult),
           initialChildren: children,
         );
 
   static const String name = 'RegisterRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<RegisterRouteArgs> page =
+      PageInfo<RegisterRouteArgs>(name);
+}
+
+class RegisterRouteArgs {
+  const RegisterRouteArgs({required this.onResult});
+
+  final dynamic Function(bool?) onResult;
+
+  @override
+  String toString() {
+    return 'RegisterRouteArgs{onResult: $onResult}';
+  }
 }
 
 /// generated route for
@@ -244,30 +275,30 @@ class SettingsRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [SignInScreen]
-class SignInRoute extends PageRouteInfo<void> {
-  const SignInRoute({List<PageRouteInfo>? children})
-      : super(
+class SignInRoute extends PageRouteInfo<SignInRouteArgs> {
+  SignInRoute({
+    required dynamic Function(bool?) onResult,
+    List<PageRouteInfo>? children,
+  }) : super(
           SignInRoute.name,
+          args: SignInRouteArgs(onResult: onResult),
           initialChildren: children,
         );
 
   static const String name = 'SignInRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<SignInRouteArgs> page = PageInfo<SignInRouteArgs>(name);
 }
 
-/// generated route for
-/// [SplashScreen]
-class SplashRoute extends PageRouteInfo<void> {
-  const SplashRoute({List<PageRouteInfo>? children})
-      : super(
-          SplashRoute.name,
-          initialChildren: children,
-        );
+class SignInRouteArgs {
+  const SignInRouteArgs({required this.onResult});
 
-  static const String name = 'SplashRoute';
+  final dynamic Function(bool?) onResult;
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  @override
+  String toString() {
+    return 'SignInRouteArgs{onResult: $onResult}';
+  }
 }
 
 /// generated route for
