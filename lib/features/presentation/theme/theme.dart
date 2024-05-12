@@ -1,16 +1,30 @@
 import 'package:flutter/material.dart';
 
-const _primaryColor = Color(0xFFF82B10);
+const _primaryColor = Color.fromARGB(255, 255, 90, 90);
 
 const _textTheme = TextTheme(
-  titleMedium: TextStyle(
+  titleSmall: TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w600,
   ),
-  titleLarge: TextStyle(
-    fontSize: 28,
+  titleMedium: TextStyle(
+    fontSize: 25,
     fontWeight: FontWeight.w600,
   ),
+  titleLarge: TextStyle(
+    fontSize: 35,
+    fontWeight: FontWeight.w600,
+  ),
+
+  displaySmall: TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    color: _primaryColor
+  )
+);
+
+const _buttonTheme = ButtonThemeData(
+
 );
 
 final darkTheme = ThemeData(
