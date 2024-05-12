@@ -38,7 +38,6 @@ class AppRouter extends _$AppRouter {
             ),
           ],
         ),
-        
         AutoRoute(
           page: SettingsRoute.page,
           children: [
@@ -52,16 +51,13 @@ class AppRouter extends _$AppRouter {
             ),
           ],
         ),
-        
         AutoRoute(
           page: ReserveListRoute.page,
           children: [
             AutoRoute(
               page: ReserveRoute.page,
               children: [
-                AutoRoute(
-                  page: PlaceSetRoute.page
-                ),
+                AutoRoute(page: PlaceSetRoute.page),
               ],
             ),
           ],

@@ -1,6 +1,6 @@
 import 'dart:core';
 import 'dart:async';
-import 'package:app/features/presentation/ui/home/home.dart';
+import 'package:app/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -16,21 +16,23 @@ class SplashScreen extends StatefulWidget {
 
 // Create a widget state
 class _SplashScreenState extends State<SplashScreen> {
+  void redirect(){
+    Future.delayed(
+      const Duration(seconds: 3),
+      () {
+        AutoRouter.of(context).pushPathState(const HomeRoute());
+      },
+    );
+  }
+
   // State initialization
   @override
   void initState() {
     super.initState();
 
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-
-    // Future.delayed(
-    //   const Duration(seconds: 3),
-    //   () {
-    //     Navigator.of(context).pushReplacement(MaterialPageRoute(
-    //       builder: (_) => Home(),
-    //     ));
-    //   },
-    // );
+    
+    redirect();
   }
 
   @override
@@ -39,30 +41,31 @@ class _SplashScreenState extends State<SplashScreen> {
         overlays: SystemUiOverlay.values);
   }
 
-  // Widget creation
   @override
   Widget build(BuildContext context) {
+    // redirect();
     // And this is the layout of the widget,
     // a bit like QML although obviously not a JSON structure
+    const AssetImage logo = AssetImage('assets/images/image_3.jpg');
     return Scaffold(
       body: Container(
         width: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              colors: [Colors.blue, Colors.purple],
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft),
-        ),
+        // decoration: const BoxDecoration(
+        //   gradient: LinearGradient(
+        //       colors: [Colors.blue, Colors.purple],
+        //       begin: Alignment.topRight,
+        //       end: Alignment.bottomLeft),
+        // ),
         child: Animate(
-          effects: const [FadeEffect(delay: Duration(milliseconds: 500))],
+          effects: const [
+            FadeEffect(delay: Duration(milliseconds: 0)),
+          ],
           child: const Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CircleAvatar(
                 radius: 60, // Image radius
-                backgroundImage: AssetImage(
-                  'assets/images/image_3.jpg'
-                ),
+                backgroundImage: logo,
               ),
               SizedBox(
                 height: 20,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-const primaryColor = Color(0xFFF82B10);
+const _primaryColor = Color(0xFFF82B10);
 
-const textTheme = TextTheme(
+const _textTheme = TextTheme(
   titleMedium: TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w600,
@@ -15,22 +15,22 @@ const textTheme = TextTheme(
 
 final darkTheme = ThemeData(
   useMaterial3: true,
-  primaryColor: primaryColor,
-  textTheme: textTheme,
-  scaffoldBackgroundColor: Colors.black,
+  primaryColor: _primaryColor,
+  textTheme: _textTheme,
+  scaffoldBackgroundColor: Color.fromARGB(255, 46, 41, 41),
   colorScheme: ColorScheme.fromSeed(
-    seedColor: primaryColor,
+    seedColor: _primaryColor,
     brightness: Brightness.dark,
   ),
 );
 
 final lightTheme = ThemeData(
   useMaterial3: true,
-  primaryColor: primaryColor,
-  textTheme: textTheme,
+  primaryColor: _primaryColor,
+  textTheme: _textTheme,
   scaffoldBackgroundColor: const Color(0xFFEFF1F3),
   colorScheme: ColorScheme.fromSeed(
-    seedColor: primaryColor,
+    seedColor: _primaryColor,
     brightness: Brightness.light,
   ),
 );
