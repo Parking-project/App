@@ -149,6 +149,32 @@ class ReserveListScreen extends StatelessWidget {
   }
 
   Widget _reserves(ReserveEntity reserve, index, BuildContext context) {
+    Widget? reserveAction = null;
+    if (reserve.state != "Удалена") {
+      reserveAction = Row(
+        children: [
+          FilledButton(
+            onPressed: () {
+              context.read<ReserveListCubit>().deleteReserve(index);
+            },
+            child: Text(
+              "Удалить",
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ),
+          FilledButton(
+            onPressed: () {
+              context.router.push(PlaceSetRoute(index: index));
+            },
+            child: Text(
+              ">>",
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ),
+        ],
+      );
+    }
+
     return Container(
       width: MediaQuery.of(context).size.width,
       margin: const EdgeInsets.all(10.0),
@@ -156,7 +182,7 @@ class ReserveListScreen extends StatelessWidget {
         reserve: reserve,
         child: FilledButton(
           onPressed: () {
-            context.router.push(ReserveRoute(index: index));
+            context.router.push(PlaceSetRoute(index: index));
           },
           child: Text(
             ">>",

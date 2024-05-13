@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:app/features/domain/entity/reserve_api_entity.dart';
 import 'package:app/features/presentation/ui/reserve_history/reserve_history/reserve_history_cubit.dart';
 import 'package:app/features/presentation/widget/reserve.dart';
-import 'package:app/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

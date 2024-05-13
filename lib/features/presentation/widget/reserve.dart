@@ -6,13 +6,13 @@ import 'package:intl/intl.dart';
 class ReserveCard extends StatelessWidget {
   const ReserveCard({
     super.key,
-    required this.child,
+    this.child,
     required this.reserve,
     this.state,
   });
 
   final ReserveEntity reserve;
-  final Widget child;
+  final Widget? child;
   final String? state;
 
   String _getTimestampFormat(int timestamp) {
@@ -52,7 +52,10 @@ class ReserveCard extends StatelessWidget {
                 ),
               ],
             ),
-            child
+            Padding(
+              padding: const EdgeInsets.all(0.0),
+              child: child,
+            )
           ],
         ),
       ),

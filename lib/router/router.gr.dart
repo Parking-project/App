@@ -43,20 +43,13 @@ abstract class _$AppRouter extends RootStackRouter {
     ReserveHistoryRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const ReserveHistoryScreen(),
+        child: ReserveHistoryScreen(),
       );
     },
     ReserveListRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: ReserveListScreen(),
-      );
-    },
-    ReserveRoute.name: (routeData) {
-      final args = routeData.argsAs<ReserveRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: ReserveScreen(index: args.index),
       );
     },
     SettingsRoute.name: (routeData) {
@@ -177,35 +170,6 @@ class ReserveListRoute extends PageRouteInfo<void> {
   static const String name = 'ReserveListRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [ReserveScreen]
-class ReserveRoute extends PageRouteInfo<ReserveRouteArgs> {
-  ReserveRoute({
-    required int index,
-    List<PageRouteInfo>? children,
-  }) : super(
-          ReserveRoute.name,
-          args: ReserveRouteArgs(index: index),
-          initialChildren: children,
-        );
-
-  static const String name = 'ReserveRoute';
-
-  static const PageInfo<ReserveRouteArgs> page =
-      PageInfo<ReserveRouteArgs>(name);
-}
-
-class ReserveRouteArgs {
-  const ReserveRouteArgs({required this.index});
-
-  final int index;
-
-  @override
-  String toString() {
-    return 'ReserveRouteArgs{index: $index}';
-  }
 }
 
 /// generated route for

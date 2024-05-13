@@ -2,7 +2,6 @@ import 'package:app/features/presentation/ui/home/home.dart';
 import 'package:app/features/presentation/ui/profile/profile.dart';
 import 'package:app/features/presentation/ui/place_set/place_set.dart';
 import 'package:app/features/presentation/ui/register/register.dart';
-import 'package:app/features/presentation/ui/reserve/reserve.dart';
 import 'package:app/features/presentation/ui/reserve_history/reserve_history.dart';
 import 'package:app/features/presentation/ui/reserve_list/reserve_list.dart';
 import 'package:app/features/presentation/ui/settings/settings.dart';
@@ -42,11 +41,6 @@ class AppRouter extends _$AppRouter {
           ],
         ),
         AutoRoute(
-          page: ReserveRoute.page,
-          guards: [AuthGuard()],
-          path: "/reserve",
-        ),
-        AutoRoute(
           page: SignInRoute.page,
         ),
         AutoRoute(
@@ -54,6 +48,8 @@ class AppRouter extends _$AppRouter {
         ),
         AutoRoute(
           page: PlaceSetRoute.page,
+          guards: [AuthGuard()],
+          path: "/place_set",
         ),
       ];
 }

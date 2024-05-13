@@ -1,13 +1,7 @@
-class MessageEntity{
-  final String ID;
-  final int messageDate;
-  final String messageText;
-  final int messageTelegramID;
+class MessageEntity {
+  final String message;
 
   MessageEntity({
-    required this.ID,
-    required this.messageDate,
-    required this.messageText,
-    required this.messageTelegramID,
+    required this.message,
   });
 }

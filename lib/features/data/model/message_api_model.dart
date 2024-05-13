@@ -1,22 +1,13 @@
 class MessageModel {
-  final String ID;
-  final int messageDate;
-  final String messageText;
-  final int messageTelegramID;
+  final String message;
 
   MessageModel({
-    required this.ID,
-    required this.messageDate,
-    required this.messageText,
-    required this.messageTelegramID,
+    required this.message,
   });
 
   factory MessageModel.fromJson(Map<String, dynamic> json) {
     return MessageModel(
-      ID: json['ID'],
-      messageDate: json['message_date'],
-      messageText: json['message_text'],
-      messageTelegramID: json['message_bot_id'],
+      message: json["data"],
     );
   }
 }

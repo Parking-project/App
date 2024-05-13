@@ -8,11 +8,68 @@ part 'reserve_list_state.dart';
 class ReserveListCubit extends Cubit<ReserveListState> {
   ReserveListCubit(this._repo) : super(const ReserveListInitial());
 
-  int currentPage = 0;
-  int reserveState = 2;
   final ReserveRepository _repo;
 
-  void setReserveState(int reserveState){
+  void updateReserves() {
+    final currentState = state;
+    if (currentState is ReserveListLoaded) {
+      List<ReserveEntity> oldReserves = currentState.reserves;
+
+      int page_size = 10 * currentPage;
+      _repo.getPage([reserveState], 0, page_size).then(
+        (response) {
+          response.fold(
+            (l) => null,
+            (r) {
+              emit(const ReserveListInitial());
+              emit(ReserveListLoaded(r));
+            },
+          );
+        },
+      );
+    }
+  }
+
+  void addReserve(int begin, int end) {
+    final currentState = state;
+    if (currentState is ReserveListLoaded) {
+      List<ReserveEntity> oldReserves = currentState.reserves;
+
+      _repo.addReserve(begin, end).then(
+        (response) {
+          response.fold(
+            (l) => null,
+            (r) {
+              updateReserves();
+            },
+          );
+        },
+      );
+    }
+  }
+
+  void deleteReserve(int index) {
+    final currentState = state;
+    if (currentState is ReserveListLoaded) {
+      List<ReserveEntity> oldReserves = currentState.reserves;
+
+      _repo.deleteReserve(oldReserves.elementAt(index).ID).then(
+        (response) {
+          response.fold(
+            (l) => null,
+            (r) {
+              updateReserves();
+            },
+          );
+        },
+      );
+    }
+  }
+
+  int currentPage = 0;
+  int reserveState = 2;
+
+  void setReserveState(int reserveState) {
     currentPage = 0;
     this.reserveState = reserveState;
     emit(const ReserveListInitial());
@@ -31,7 +88,7 @@ class ReserveListCubit extends Cubit<ReserveListState> {
 
     emit(ReserveListLoading(oldReserves, isFirstFetch: currentPage == 0));
 
-    _repo.getPage([reserveState], currentPage).then((response) {
+    _repo.getPage([reserveState], currentPage, 10).then((response) {
       currentPage += 1;
 
       final reserves = (state as ReserveListLoading).oldReserves;
