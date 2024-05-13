@@ -2,6 +2,7 @@ import 'package:app/features/data/repository/settings_repository_impl.dart';
 import 'package:app/features/domain/repository/settings_repository.dart';
 import 'package:app/features/data/repository/tokens_repository_impl.dart';
 import 'package:app/features/domain/repository/tokens_repository.dart';
+import 'package:app/features/presentation/ui/reserve_list/reserve_list/reserve_list_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:get_storage/get_storage.dart';
@@ -62,6 +63,9 @@ Future<void> init() async {
   );
   service.registerLazySingleton(
     () => UserCubit(service())
+  );
+  service.registerLazySingleton(
+    () => ReserveListCubit(service())
   );
 
   service.registerLazySingleton<TokensRepositoryInterface>(

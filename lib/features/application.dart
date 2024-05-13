@@ -40,7 +40,7 @@ class _ApplicationState extends State<Application> {
           create: (context) => SignInCubit(service())..init(),
         ),
         BlocProvider(
-          create: (context) => ReserveListCubit(service())..init(),
+          create: (context) => ReserveListCubit(service())..getReserve(),
         ),
       ],
       child: BlocBuilder<ThemeCubit, ThemeState>(

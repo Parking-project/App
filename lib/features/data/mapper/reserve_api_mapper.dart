@@ -7,6 +7,7 @@ extension ReserveMapperModel on ReserveModel {
       ID: ID,
       begin: begin,
       end: end,
+      state: state,
       place_code: place_code
     );
   }

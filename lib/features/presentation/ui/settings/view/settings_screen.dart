@@ -40,13 +40,6 @@ class SettingsScreen extends StatelessWidget {
               },
             ),
           ),
-          SliverToBoxAdapter(
-            child: SettingsActionCard(
-              title: 'Поддержка',
-              iconData: Icons.message_outlined,
-              onTap: () {},
-            ),
-          ),
         ],
       ),
     );

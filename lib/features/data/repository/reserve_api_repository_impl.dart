@@ -14,18 +14,18 @@ class ReserveRepositoryImpl implements ReserveRepository {
   final String _baseUrl = "/reserve";
   @override
   Future<Either<Fauiler, List<ReserveEntity>>> getPage(
-      int state, int pageIndex) async {
+      List<int> state, int pageIndex) async {
     try {
-      final data = await service<Dio>().get(
+      final data = await service<Dio>().post(
         '${_baseUrl}/get_state',
         data: jsonEncode({
-          "reserve_states": [state],
+          "reserve_states": state,
           "page_index": pageIndex,
           "page_size": 10,
         }),
       );
-
-      return right((data.data as List)
+      print("\n\n\nStatus_code = ${data}");
+      return right((data.data["data"] as List)
           .map((json) => ReserveModel.fromJson(json).toEntity())
           .toList());
     } on DioException catch (_) {

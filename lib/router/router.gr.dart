@@ -21,28 +21,11 @@ abstract class _$AppRouter extends RootStackRouter {
         child: HomeScreen(),
       );
     },
-    PasswordChangeRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const PasswordChangeScreen(),
-      );
-    },
-    PlaceHistoryRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const PlaceHistoryScreen(),
-      );
-    },
-    PlaceListRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const PlaceListScreen(),
-      );
-    },
     PlaceSetRoute.name: (routeData) {
+      final args = routeData.argsAs<PlaceSetRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const PlaceSetScreen(),
+        child: PlaceSetScreen(index: args.index),
       );
     },
     ProfileRoute.name: (routeData) {
@@ -88,16 +71,10 @@ abstract class _$AppRouter extends RootStackRouter {
         child: SignInScreen(),
       );
     },
-    SupportChatRoute.name: (routeData) {
+    SplashRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const SupportChatScreen(),
-      );
-    },
-    SupportRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const SupportScreen(),
+        child: SplashScreen(),
       );
     },
   };
@@ -118,59 +95,32 @@ class HomeRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [PasswordChangeScreen]
-class PasswordChangeRoute extends PageRouteInfo<void> {
-  const PasswordChangeRoute({List<PageRouteInfo>? children})
-      : super(
-          PasswordChangeRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'PasswordChangeRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [PlaceHistoryScreen]
-class PlaceHistoryRoute extends PageRouteInfo<void> {
-  const PlaceHistoryRoute({List<PageRouteInfo>? children})
-      : super(
-          PlaceHistoryRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'PlaceHistoryRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [PlaceListScreen]
-class PlaceListRoute extends PageRouteInfo<void> {
-  const PlaceListRoute({List<PageRouteInfo>? children})
-      : super(
-          PlaceListRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'PlaceListRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
 /// [PlaceSetScreen]
-class PlaceSetRoute extends PageRouteInfo<void> {
-  const PlaceSetRoute({List<PageRouteInfo>? children})
-      : super(
+class PlaceSetRoute extends PageRouteInfo<PlaceSetRouteArgs> {
+  PlaceSetRoute({
+    required int index,
+    List<PageRouteInfo>? children,
+  }) : super(
           PlaceSetRoute.name,
+          args: PlaceSetRouteArgs(index: index),
           initialChildren: children,
         );
 
   static const String name = 'PlaceSetRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<PlaceSetRouteArgs> page =
+      PageInfo<PlaceSetRouteArgs>(name);
+}
+
+class PlaceSetRouteArgs {
+  const PlaceSetRouteArgs({required this.index});
+
+  final int index;
+
+  @override
+  String toString() {
+    return 'PlaceSetRouteArgs{index: $index}';
+  }
 }
 
 /// generated route for
@@ -287,29 +237,15 @@ class SignInRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [SupportChatScreen]
-class SupportChatRoute extends PageRouteInfo<void> {
-  const SupportChatRoute({List<PageRouteInfo>? children})
+/// [SplashScreen]
+class SplashRoute extends PageRouteInfo<void> {
+  const SplashRoute({List<PageRouteInfo>? children})
       : super(
-          SupportChatRoute.name,
+          SplashRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'SupportChatRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [SupportScreen]
-class SupportRoute extends PageRouteInfo<void> {
-  const SupportRoute({List<PageRouteInfo>? children})
-      : super(
-          SupportRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'SupportRoute';
+  static const String name = 'SplashRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

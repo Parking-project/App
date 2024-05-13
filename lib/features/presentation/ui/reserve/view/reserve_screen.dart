@@ -9,8 +9,15 @@ class ReserveScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Text(
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: true,
+        title: Text(
+          "Бронирование",
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+      ),
+      body: const Text(
         "Hello",
       ),
     );

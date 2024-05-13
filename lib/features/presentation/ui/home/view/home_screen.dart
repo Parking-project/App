@@ -13,7 +13,8 @@ class HomeScreen extends StatelessWidget {
       routes: const [
         ProfileRoute(),
         ReserveListRoute(),
-        SettingsRoute()
+        ReserveHistoryRoute(),
+        SettingsRoute(),
       ],
       builder: (context, child) {
         final tabsRouter = AutoTabsRouter.of(context);
@@ -32,6 +33,10 @@ class HomeScreen extends StatelessWidget {
               BottomNavigationBarItem(
                 icon: Icon(Icons.data_usage),
                 label: "Бронирования"
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.data_usage),
+                label: "История бронирований"
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.settings),

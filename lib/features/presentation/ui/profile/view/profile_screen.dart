@@ -10,7 +10,10 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text("Профиль"),
+        title: Text(
+          "Профиль",
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
       ),
       body: SizedBox(
         width: double.infinity,

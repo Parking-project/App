@@ -4,7 +4,7 @@ import 'package:app/features/domain/entity/reserve_api_entity.dart';
 
 abstract class ReserveRepository {
   Future<Either<Fauiler, List<ReserveEntity>>> getPage(
-    int state,
+    List<int> state,
     int pageIndex,
   );
 }
