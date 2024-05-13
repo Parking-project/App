@@ -6,8 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class SignInScreen extends StatelessWidget {
-  final Function(bool?) onResult;
-  SignInScreen({required this.onResult});
+  SignInScreen();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController loginController = TextEditingController();
@@ -20,10 +19,9 @@ class SignInScreen extends StatelessWidget {
           FilledButton(
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                context.read<SignInCubit>().login(
-                      loginController.text,
-                      passwordController.text,
-                    );
+                context
+                    .read<SignInCubit>()
+                    .login(loginController.text, passwordController.text);
               }
             },
             child: Text(
@@ -34,7 +32,7 @@ class SignInScreen extends StatelessWidget {
           MaterialButton(
             onPressed: () {
               context.router.push(
-                RegisterRoute(onResult: onResult),
+                const RegisterRoute(),
               );
             },
             child: Text(
@@ -92,56 +90,58 @@ class SignInScreen extends StatelessWidget {
             style: Theme.of(context).textTheme.titleLarge,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 30),
+            padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 35),
             child: Form(
               key: _formKey,
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 95,
-                    child: TextFormField(
-                      controller: loginController,
-                      keyboardType: TextInputType.text,
-                      decoration: const InputDecoration(
-                        labelText: "Логин",
-                        hintText: "Введите логин",
-                        prefixIcon: Icon(Icons.email),
+              child: BlocBuilder<SignInCubit, SignInState>(
+                builder: (context, state) {
+                  return Column(
+                    children: [
+                      SizedBox(
+                        height: 95,
+                        child: TextFormField(
+                          enabled: state is SignInInitial || state is SignInException,
+                          controller: loginController,
+                          keyboardType: TextInputType.text,
+                          decoration: const InputDecoration(
+                            labelText: "Логин",
+                            hintText: "Введите логин",
+                            prefixIcon: Icon(Icons.email),
+                          ),
+                          style: Theme.of(context).textTheme.titleMedium,
+                          onChanged: (String value) {},
+                          validator: (value) {
+                            return value!.isEmpty ? 'Введите логин' : null;
+                          },
+                        ),
                       ),
-                      style: Theme.of(context).textTheme.titleMedium,
-                      onChanged: (String value) {},
-                      validator: (value) {
-                        return value!.isEmpty ? 'Введите логин' : null;
-                      },
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  SizedBox(
-                    height: 95,
-                    child: TextFormField(
-                      controller: passwordController,
-                      keyboardType: TextInputType.visiblePassword,
-                      decoration: const InputDecoration(
-                        labelText: "Пароль",
-                        hintText: "Введите пароль",
-                        prefixIcon: Icon(Icons.password),
+                      const SizedBox(
+                        height: 15,
                       ),
-                      style: Theme.of(context).textTheme.titleMedium,
-                      onChanged: (String value) {},
-                      validator: (value) {
-                        return value!.isEmpty ? 'Введите пароль' : null;
-                      },
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 35),
-                    child: BlocBuilder<SignInCubit, SignInState>(
-                      builder: (context, state) {
-                        return switch (state) {
+                      SizedBox(
+                        height: 95,
+                        child: TextFormField(
+                          enabled: state is SignInInitial || state is SignInException,
+                          controller: passwordController,
+                          keyboardType: TextInputType.visiblePassword,
+                          decoration: const InputDecoration(
+                            labelText: "Пароль",
+                            hintText: "Введите пароль",
+                            prefixIcon: Icon(Icons.password),
+                          ),
+                          style: Theme.of(context).textTheme.titleMedium,
+                          onChanged: (String value) {},
+                          validator: (value) {
+                            return value!.isEmpty ? 'Введите пароль' : null;
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 35),
+                        child: switch (state) {
                           SignInInitial() => Builder(
                               builder: (context) {
                                 return getButtonState(context, "", true);
@@ -152,17 +152,24 @@ class SignInScreen extends StatelessWidget {
                                 return getButtonState(context, "", false);
                               },
                             ),
+                          SignInSuccess() => Builder(
+                              builder: (context) {
+                                context.router.push(const ProfileRoute());
+                                context.read<SignInCubit>().init();
+                                return getButtonState(context, "", true);
+                              },
+                            ),
                           SignInException() || _ => Builder(
                               builder: (context) {
                                 return getButtonState(
                                     context, "Авторизация провалилась", true);
                               },
                             ),
-                        };
-                      },
-                    ),
-                  ),
-                ],
+                        },
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
           )

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:app/core/error/failure.dart';
@@ -9,20 +11,24 @@ import 'package:app/features/data/mapper/reserve_api_mapper.dart';
 import '../model/reserve_api_model.dart';
 
 class ReserveRepositoryImpl implements ReserveRepository {
+  final String _baseUrl = "/reserve";
   @override
-  Future<Either<Fauiler, List<ReserveEntity>>> writeCar(
-    int limit,
-    String model,
-  ) async {
+  Future<Either<Fauiler, List<ReserveEntity>>> getPage(
+      int state, int pageIndex) async {
     try {
-      final data =
-          await service<Dio>().get('cars?limit=${limit}&model=${model}');
+      final data = await service<Dio>().get(
+        '${_baseUrl}/get_state',
+        data: jsonEncode({
+          "reserve_states": [state],
+          "page_index": pageIndex,
+          "page_size": 10,
+        }),
+      );
 
       return right((data.data as List)
           .map((json) => ReserveModel.fromJson(json).toEntity())
           .toList());
     } on DioException catch (_) {
-      print("\n\n\n\n" + (_.message ?? "") + "\n\n\n\n");
       return left(DioException_());
     }
   }

@@ -3,7 +3,9 @@ import 'package:auto_route/auto_route.dart';
 
 @RoutePage()
 class ReserveScreen extends StatelessWidget {
-  const ReserveScreen({super.key});
+  const ReserveScreen({required this.index});
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {

@@ -12,54 +12,55 @@ class ProfileScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         title: const Text("Профиль"),
       ),
-      body: BlocBuilder<UserCubit, UserState>(
-        builder: (context, state) {
-          return SizedBox(
-            width: double.infinity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text("Профиль"),
-                const SizedBox(
-                  height: 25,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 35),
-                  child: BlocBuilder<UserCubit, UserState>(
-                    builder: (context, state) {
-                      return switch (state) {
-                        UserInitial() || UserLoading() => Builder(
-                            builder: (context) {
-                              context.read<UserCubit>().load();
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            },
-                          ),
-                        UserSuccess() => Builder(
-                            builder: (context) {
-                              return Center(
-                                child: Text(
-                                    "Success: ${context.read<UserCubit>().user.displayName}"),
-                              );
-                            },
-                          ),
-                        UserException() || _ => Builder(
-                            builder: (context) {
-                              context.read<UserCubit>().load();
-                              return const Center(
-                                child: Text("Exception"),
-                              );
-                            },
-                          ),
-                      };
-                    },
-                  ),
-                ),
-              ],
+      body: SizedBox(
+        width: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Профиль",
+              style: Theme.of(context).textTheme.titleLarge,
             ),
-          );
-        },
+            const SizedBox(
+              height: 25,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 35),
+              child: BlocBuilder<UserCubit, UserState>(
+                builder: (context, state) {
+                  return switch (state) {
+                    UserInitial() || UserLoading() => Builder(
+                        builder: (context) {
+                          context.read<UserCubit>().load();
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
+                      ),
+                    UserSuccess() => Builder(
+                        builder: (context) {
+                          return Center(
+                            child: Text(
+                              "Приветствую ${context.read<UserCubit>().user.displayName}",
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          );
+                        },
+                      ),
+                    UserException() || _ => Builder(
+                        builder: (context) {
+                          context.read<UserCubit>().load();
+                          return const Center(
+                            child: Text("Exception"),
+                          );
+                        },
+                      ),
+                  };
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

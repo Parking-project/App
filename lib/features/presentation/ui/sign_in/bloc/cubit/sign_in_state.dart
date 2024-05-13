@@ -2,18 +2,21 @@ part of 'sign_in_cubit.dart';
 
 @immutable
 class SignInState {
-  final String message;
-  const SignInState({required this.message});
+  const SignInState();
 }
 
 class SignInInitial extends SignInState {
-  const SignInInitial({super.message=""});
+  const SignInInitial();
 }
 
 class SignInLoading extends SignInState {
-  const SignInLoading({super.message=""});
+  const SignInLoading();
 }
 
 class SignInException extends SignInState {
-  const SignInException({required super.message});
+  const SignInException();
+}
+
+class SignInSuccess extends SignInState {
+  const SignInSuccess();
 }

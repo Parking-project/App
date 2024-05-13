@@ -16,3 +16,7 @@ class RegisterLoading extends RegisterState {
 class RegisterException extends RegisterState {
   const RegisterException();
 }
+
+class RegisterSuccess extends RegisterState {
+  const RegisterSuccess();
+}

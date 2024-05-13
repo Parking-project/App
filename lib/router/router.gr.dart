@@ -52,10 +52,9 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     RegisterRoute.name: (routeData) {
-      final args = routeData.argsAs<RegisterRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: RegisterScreen(onResult: args.onResult),
+        child: RegisterScreen(),
       );
     },
     ReserveHistoryRoute.name: (routeData) {
@@ -67,13 +66,14 @@ abstract class _$AppRouter extends RootStackRouter {
     ReserveListRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const ReserveListScreen(),
+        child: ReserveListScreen(),
       );
     },
     ReserveRoute.name: (routeData) {
+      final args = routeData.argsAs<ReserveRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const ReserveScreen(),
+        child: ReserveScreen(index: args.index),
       );
     },
     SettingsRoute.name: (routeData) {
@@ -83,10 +83,9 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     SignInRoute.name: (routeData) {
-      final args = routeData.argsAs<SignInRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: SignInScreen(onResult: args.onResult),
+        child: SignInScreen(),
       );
     },
     SupportChatRoute.name: (routeData) {
@@ -190,31 +189,16 @@ class ProfileRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [RegisterScreen]
-class RegisterRoute extends PageRouteInfo<RegisterRouteArgs> {
-  RegisterRoute({
-    required dynamic Function(bool?) onResult,
-    List<PageRouteInfo>? children,
-  }) : super(
+class RegisterRoute extends PageRouteInfo<void> {
+  const RegisterRoute({List<PageRouteInfo>? children})
+      : super(
           RegisterRoute.name,
-          args: RegisterRouteArgs(onResult: onResult),
           initialChildren: children,
         );
 
   static const String name = 'RegisterRoute';
 
-  static const PageInfo<RegisterRouteArgs> page =
-      PageInfo<RegisterRouteArgs>(name);
-}
-
-class RegisterRouteArgs {
-  const RegisterRouteArgs({required this.onResult});
-
-  final dynamic Function(bool?) onResult;
-
-  @override
-  String toString() {
-    return 'RegisterRouteArgs{onResult: $onResult}';
-  }
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -247,16 +231,31 @@ class ReserveListRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [ReserveScreen]
-class ReserveRoute extends PageRouteInfo<void> {
-  const ReserveRoute({List<PageRouteInfo>? children})
-      : super(
+class ReserveRoute extends PageRouteInfo<ReserveRouteArgs> {
+  ReserveRoute({
+    required int index,
+    List<PageRouteInfo>? children,
+  }) : super(
           ReserveRoute.name,
+          args: ReserveRouteArgs(index: index),
           initialChildren: children,
         );
 
   static const String name = 'ReserveRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<ReserveRouteArgs> page =
+      PageInfo<ReserveRouteArgs>(name);
+}
+
+class ReserveRouteArgs {
+  const ReserveRouteArgs({required this.index});
+
+  final int index;
+
+  @override
+  String toString() {
+    return 'ReserveRouteArgs{index: $index}';
+  }
 }
 
 /// generated route for
@@ -275,30 +274,16 @@ class SettingsRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [SignInScreen]
-class SignInRoute extends PageRouteInfo<SignInRouteArgs> {
-  SignInRoute({
-    required dynamic Function(bool?) onResult,
-    List<PageRouteInfo>? children,
-  }) : super(
+class SignInRoute extends PageRouteInfo<void> {
+  const SignInRoute({List<PageRouteInfo>? children})
+      : super(
           SignInRoute.name,
-          args: SignInRouteArgs(onResult: onResult),
           initialChildren: children,
         );
 
   static const String name = 'SignInRoute';
 
-  static const PageInfo<SignInRouteArgs> page = PageInfo<SignInRouteArgs>(name);
-}
-
-class SignInRouteArgs {
-  const SignInRouteArgs({required this.onResult});
-
-  final dynamic Function(bool?) onResult;
-
-  @override
-  String toString() {
-    return 'SignInRouteArgs{onResult: $onResult}';
-  }
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

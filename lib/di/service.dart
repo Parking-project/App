@@ -1,8 +1,11 @@
+import 'package:app/features/data/repository/settings_repository_impl.dart';
+import 'package:app/features/domain/repository/settings_repository.dart';
+import 'package:app/features/data/repository/tokens_repository_impl.dart';
+import 'package:app/features/domain/repository/tokens_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:app/core/interceptor_app.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -25,21 +28,23 @@ import 'package:app/features/presentation/ui/register/bloc/register/register_cub
 final service = GetIt.instance;
 
 Future<void> init() async {
+  print("regiater shared");
+  SharedPreferences pref = await SharedPreferences.getInstance();
   service.registerLazySingleton(
-    () => SharedPreferences.getInstance()
+    () => pref
   );
-  final base_url = dotenv.env["API_URL"] ?? "";
 
   await GetStorage.init('MyStorage');
   service.registerLazySingleton(
     () => GetStorage('MyStorage')
   );
 
+  const baseUrl = "http://localhost:9098";//dotenv.env["API_URL"] ?? "";
   service.registerLazySingleton(
     () => Dio(
       BaseOptions(
         headers: {"X-Api-Key": "Ihn3F2x44nf/EbWui5SOFA==YebHR8EAtQWefVF2"},
-        baseUrl: base_url,
+        baseUrl: baseUrl,
       ),
     )..interceptors.addAll(
         [
@@ -59,6 +64,12 @@ Future<void> init() async {
     () => UserCubit(service())
   );
 
+  service.registerLazySingleton<TokensRepositoryInterface>(
+    () => TokensRepository(preferences: pref),
+  );
+  service.registerLazySingleton<SettingsRepositoryInterface>(
+    () => SettingsRepository(preferences: pref),
+  );
 
   service.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(),

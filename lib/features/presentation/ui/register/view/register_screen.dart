@@ -6,8 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class RegisterScreen extends StatelessWidget {
-  final Function(bool?) onResult;
-  RegisterScreen({required this.onResult});
+  RegisterScreen();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController loginController = TextEditingController();
@@ -36,7 +35,7 @@ class RegisterScreen extends StatelessWidget {
           MaterialButton(
             onPressed: () {
               context.router.push(
-                RegisterRoute(onResult: onResult),
+                const SignInRoute(),
               );
             },
             child: Text(
@@ -94,101 +93,105 @@ class RegisterScreen extends StatelessWidget {
             style: Theme.of(context).textTheme.titleMedium,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 30),
+            padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 35),
             child: Form(
               key: _formKey,
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 95,
-                    child: TextFormField(
-                      controller: loginController,
-                      keyboardType: TextInputType.text,
-                      decoration: const InputDecoration(
-                        labelText: "Логин",
-                        hintText: "Введите логин",
-                        prefixIcon: Icon(Icons.email),
+              child: BlocBuilder<RegisterCubit, RegisterState>(
+                builder: (context, state) {
+                  return Column(
+                    children: [
+                      SizedBox(
+                        height: 95,
+                        child: TextFormField(
+                          enabled: state is RegisterInitial || state is RegisterException,
+                          controller: loginController,
+                          keyboardType: TextInputType.text,
+                          decoration: const InputDecoration(
+                            labelText: "Логин",
+                            hintText: "Введите логин",
+                            prefixIcon: Icon(Icons.email),
+                          ),
+                          style: Theme.of(context).textTheme.titleMedium,
+                          onChanged: (String value) {},
+                          validator: (value) {
+                            return value!.isEmpty ? 'Введите логин' : null;
+                          },
+                        ),
                       ),
-                      style: Theme.of(context).textTheme.titleMedium,
-                      onChanged: (String value) {},
-                      validator: (value) {
-                        return value!.isEmpty ? 'Введите логин' : null;
-                      },
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  SizedBox(
-                    height: 95,
-                    child: TextFormField(
-                      controller: nameController,
-                      keyboardType: TextInputType.text,
-                      decoration: const InputDecoration(
-                        labelText: "Имя",
-                        hintText: "Введите свое имя",
-                        prefixIcon: Icon(Icons.password),
+                      const SizedBox(
+                        height: 15,
                       ),
-                      style: Theme.of(context).textTheme.titleMedium,
-                      onChanged: (String value) {},
-                      validator: (value) {
-                        return value!.isEmpty ? 'Введите имя' : null;
-                      },
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  SizedBox(
-                    height: 95,
-                    child: TextFormField(
-                      controller: passwordController,
-                      keyboardType: TextInputType.visiblePassword,
-                      decoration: const InputDecoration(
-                        labelText: "Пароль",
-                        hintText: "Введите пароль",
-                        prefixIcon: Icon(Icons.password),
+                      SizedBox(
+                        height: 95,
+                        child: TextFormField(
+                          enabled: state is RegisterInitial || state is RegisterException,
+                          controller: nameController,
+                          keyboardType: TextInputType.text,
+                          decoration: const InputDecoration(
+                            labelText: "Имя",
+                            hintText: "Введите свое имя",
+                            prefixIcon: Icon(Icons.password),
+                          ),
+                          style: Theme.of(context).textTheme.titleMedium,
+                          onChanged: (String value) {},
+                          validator: (value) {
+                            return value!.isEmpty ? 'Введите имя' : null;
+                          },
+                        ),
                       ),
-                      style: Theme.of(context).textTheme.titleMedium,
-                      onChanged: (String value) {},
-                      validator: (value) {
-                        return value!.isEmpty ? 'Введите пароль' : null;
-                      },
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  SizedBox(
-                    height: 95,
-                    child: TextFormField(
-                      keyboardType: TextInputType.visiblePassword,
-                      decoration: const InputDecoration(
-                        labelText: "Проверка пароль",
-                        hintText: "Введите пароль снова",
-                        prefixIcon: Icon(Icons.password),
+                      const SizedBox(
+                        height: 15,
                       ),
-                      style: Theme.of(context).textTheme.titleMedium,
-                      onChanged: (String value) {},
-                      validator: (value) {
-                        if (value!.isEmpty){
-                          return 'Введите пароль';
-                        }
-                        if (value != passwordController.text){
-                          return 'Пароль не совпадает';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 35),
-                    child: BlocBuilder<RegisterCubit, RegisterState>(
-                      builder: (context, state) {
-                        return switch (state) {
+                      SizedBox(
+                        height: 95,
+                        child: TextFormField(
+                          enabled: state is RegisterInitial || state is RegisterException,
+                          controller: passwordController,
+                          keyboardType: TextInputType.visiblePassword,
+                          decoration: const InputDecoration(
+                            labelText: "Пароль",
+                            hintText: "Введите пароль",
+                            prefixIcon: Icon(Icons.password),
+                          ),
+                          style: Theme.of(context).textTheme.titleMedium,
+                          onChanged: (String value) {},
+                          validator: (value) {
+                            return value!.isEmpty ? 'Введите пароль' : null;
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      SizedBox(
+                        height: 95,
+                        child: TextFormField(
+                          enabled: state is RegisterInitial || state is RegisterException,
+                          keyboardType: TextInputType.visiblePassword,
+                          decoration: const InputDecoration(
+                            labelText: "Проверка пароль",
+                            hintText: "Введите пароль снова",
+                            prefixIcon: Icon(Icons.password),
+                          ),
+                          style: Theme.of(context).textTheme.titleMedium,
+                          onChanged: (String value) {},
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Введите пароль';
+                            }
+                            if (value != passwordController.text) {
+                              return 'Пароль не совпадает';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 35),
+                        child: switch (state) {
                           RegisterInitial() => Builder(
                               builder: (context) {
                                 return getButtonState(context, "", true);
@@ -199,18 +202,24 @@ class RegisterScreen extends StatelessWidget {
                                 return getButtonState(context, "", false);
                               },
                             ),
-                          RegisterException() || _ => Builder(
+                          RegisterSuccess() => Builder(
                               builder: (context) {
-                                onResult(true);
-                                return getButtonState(
-                                    context, "Регистрация провалилась", true);
+                                context.router.push(const ProfileRoute());
+                                context.read<RegisterCubit>().init();
+                                return getButtonState(context, "", true);
                               },
                             ),
-                        };
-                      },
-                    ),
-                  ),
-                ],
+                          RegisterException() || _ => Builder(
+                              builder: (context) {
+                                return getButtonState(context,
+                                    "Регистрация провалилась", true);
+                              },
+                            ),
+                        },
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
           )

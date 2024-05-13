@@ -6,30 +6,35 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:app/core/error/failure.dart';
 import 'package:app/di/service.dart';
+import 'dart:convert';
 
 class AuthRepositoryImpl implements AuthRepository {
   final String _baseUrl = "/token";
   @override
-  Future<Either<Fauiler, AuthEntity>> signIn(String login, String password) async {
+  Future<Either<Fauiler, AuthEntity>> signIn(
+      String login, String password) async {
     try {
       final data = await service<Dio>().post(
-        _baseUrl+'/login');
+        '${_baseUrl}/login',
+        data: jsonEncode({"login": login, "password": password}),
+      );
 
       return right(AuthModel.fromJson(data.data).toEntity());
     } on DioException catch (_) {
-      print("\n\n\n\n" + (_.message ?? "") + "\n\n\n\n");
       return left(DioException_());
     }
   }
-  
-  @override
-  Future<Either<Fauiler, AuthEntity>> registration(String login, String displayName, String password) async{
-    try {
-      final data = await service<Dio>().get('cars');
 
+  @override
+  Future<Either<Fauiler, AuthEntity>> registration(
+      String login, String displayName, String password) async {
+    try {
+      final data = await service<Dio>().post(
+        '${_baseUrl}/register',
+        data: jsonEncode({"login": login, "password": password, "display_name": displayName}),
+      );
       return right(AuthModel.fromJson(data.data).toEntity());
     } on DioException catch (_) {
-      print("\n\n\n\n" + (_.message ?? "") + "\n\n\n\n");
       return left(DioException_());
     }
   }

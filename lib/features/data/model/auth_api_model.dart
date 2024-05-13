@@ -11,9 +11,9 @@ class AuthModel {
 
   factory AuthModel.fromJson(Map<String, dynamic> json) {
     return AuthModel(
-      access: json['access'],
-      refresh: json['refresh'],
-      roleName: json['role_name'],
+      access: json['tokens']['access'],
+      refresh: json['tokens']['refresh'],
+      roleName: json['role'],
     );
   }
 }

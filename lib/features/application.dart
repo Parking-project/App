@@ -1,6 +1,8 @@
 import 'package:app/di/service.dart';
+import 'package:app/features/presentation/bloc/tokens/tokens_cubit.dart';
 import 'package:app/features/presentation/ui/profile/bloc/user/user_cubit.dart';
 import 'package:app/features/presentation/ui/register/bloc/register/register_cubit.dart';
+import 'package:app/features/presentation/ui/reserve_list/reserve_list/reserve_list_cubit.dart';
 import 'package:app/features/presentation/ui/sign_in/bloc/cubit/sign_in_cubit.dart';
 import 'package:app/router/router.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +25,10 @@ class _ApplicationState extends State<Application> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => ThemeCubit(),
+          create: (context) => ThemeCubit(settingsRepository: service()),
+        ),
+        BlocProvider(
+          create: (context) => TokensCubit(tokensRepository: service()),
         ),
         BlocProvider(
           create: (context) => UserCubit(service())..init(),
@@ -34,11 +39,18 @@ class _ApplicationState extends State<Application> {
         BlocProvider(
           create: (context) => SignInCubit(service())..init(),
         ),
+        BlocProvider(
+          create: (context) => ReserveListCubit(service())..init(),
+        ),
       ],
-      child: MaterialApp.router(
-        title: 'Flutter Demo',
-        theme: darkTheme,
-        routerConfig: _router.config(),
+      child: BlocBuilder<ThemeCubit, ThemeState>(
+        builder: (context, state) {
+          return MaterialApp.router(
+            title: 'Flutter Demo',
+            theme: state.isDark? darkTheme : lightTheme,
+            routerConfig: _router.config(),
+          );
+        },
       ),
     );
   }
