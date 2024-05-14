@@ -15,15 +15,14 @@ class UserRepositoryImpl implements UserRepository {
   Future<Either<Fauiler, UserEntity>> getUser() async {
     try {
       final data =
-          await service<Dio>().get('${baseUrl}/get');
+          await service<Dio>().get('$baseUrl/get');
 
       return right(
         UserModel.fromJson(data.data).toEntity()
       );
 
     } on DioException catch (_) {
-      print("\n\n\n\n" + (_.message ?? "") + "\n\n\n\n");
-      return left(DioException_());
+      return left(DioExceptionCustom());
     }
   }
 }

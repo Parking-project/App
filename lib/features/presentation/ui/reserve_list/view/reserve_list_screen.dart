@@ -7,13 +7,14 @@ import 'package:app/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 
 @RoutePage()
 class ReserveListScreen extends StatelessWidget {
   final scrollController = ScrollController();
 
-  TextEditingController dropDownMenuController = TextEditingController();
+  final TextEditingController dropDownMenuController = TextEditingController();
+
+  ReserveListScreen({super.key});
 
   void setupScrollController(context) {
     scrollController.addListener(() {
@@ -79,6 +80,13 @@ class ReserveListScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           FloatingActionButton(
+            heroTag: "add",
+            onPressed: () {
+              context.router.push(const ReserveAddRoute());
+            },
+            child: const Icon(Icons.add),
+          ),
+          FloatingActionButton(
             heroTag: "scrollUp",
             onPressed: () => _scrollUp(),
             child: const Icon(Icons.arrow_upward),
@@ -86,7 +94,7 @@ class ReserveListScreen extends StatelessWidget {
           FloatingActionButton(
             heroTag: "updateData",
             onPressed: () {
-              context.read<ReserveListCubit>().setReserveState(2);
+              context.read<ReserveListCubit>().setReserveState(null);
             },
             child: const Icon(Icons.loop),
           ),
@@ -149,30 +157,54 @@ class ReserveListScreen extends StatelessWidget {
   }
 
   Widget _reserves(ReserveEntity reserve, index, BuildContext context) {
-    Widget? reserveAction = null;
-    if (reserve.state != "Удалена") {
-      reserveAction = Row(
-        children: [
-          FilledButton(
-            onPressed: () {
-              context.read<ReserveListCubit>().deleteReserve(index);
-            },
-            child: Text(
-              "Удалить",
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-          ),
-          FilledButton(
-            onPressed: () {
-              context.router.push(PlaceSetRoute(index: index));
-            },
-            child: Text(
-              ">>",
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-          ),
-        ],
-      );
+    Widget? reserveAction;
+    switch (reserve.state) {
+      case "Отправлена":
+        {
+          reserveAction = Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(""),
+              FilledButton(
+                onPressed: () {
+                  context.read<ReserveListCubit>().deleteReserve(index);
+                },
+                child: Text(
+                  "Удалить",
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+              ),
+            ],
+          );
+        }
+
+      case "Одобрена":
+        {
+          reserveAction = Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              FilledButton(
+                onPressed: () {
+                  // context.router.push(PlaceSetRoute(index: index));
+                  context.router.push(PlaceSetRoute(reserveid: reserve.ID));
+                },
+                child: Text(
+                  "Парковочные места",
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+              ),
+              FilledButton(
+                onPressed: () {
+                  context.read<ReserveListCubit>().deleteReserve(index);
+                },
+                child: Text(
+                  "Удалить",
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+              ),
+            ],
+          );
+        }
     }
 
     return Container(
@@ -180,15 +212,7 @@ class ReserveListScreen extends StatelessWidget {
       margin: const EdgeInsets.all(10.0),
       child: ReserveCard(
         reserve: reserve,
-        child: FilledButton(
-          onPressed: () {
-            context.router.push(PlaceSetRoute(index: index));
-          },
-          child: Text(
-            ">>",
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-        ),
+        child: reserveAction,
       ),
     );
   }

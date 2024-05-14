@@ -15,13 +15,13 @@ class AuthRepositoryImpl implements AuthRepository {
       String login, String password) async {
     try {
       final data = await service<Dio>().post(
-        '${_baseUrl}/login',
+        '$_baseUrl/login',
         data: jsonEncode({"login": login, "password": password}),
       );
 
       return right(AuthModel.fromJson(data.data).toEntity());
     } on DioException catch (_) {
-      return left(DioException_());
+      return left(DioExceptionCustom());
     }
   }
 
@@ -30,12 +30,12 @@ class AuthRepositoryImpl implements AuthRepository {
       String login, String displayName, String password) async {
     try {
       final data = await service<Dio>().post(
-        '${_baseUrl}/register',
+        '$_baseUrl/register',
         data: jsonEncode({"login": login, "password": password, "display_name": displayName}),
       );
       return right(AuthModel.fromJson(data.data).toEntity());
     } on DioException catch (_) {
-      return left(DioException_());
+      return left(DioExceptionCustom());
     }
   }
 }

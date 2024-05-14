@@ -1,8 +1,7 @@
-import 'package:app/di/service.dart';
 import 'package:app/features/presentation/bloc/theme/theme_cubit.dart';
 import 'package:app/features/presentation/widget/base_container.dart';
-import 'package:app/features/presentation/widget/settings_toggle_card.dart';
-import 'package:app/router/router.dart';
+import 'package:app/features/presentation/widget/settings_button_card.dart';
+import 'package:app/features/presentation/widget/settings_switch_card.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,14 +29,29 @@ class SettingsScreen extends StatelessWidget {
           ),
           const SliverToBoxAdapter(child: SizedBox(height: 16)),
           SliverToBoxAdapter(
-            child: SettingsToggleCard(
+            child: SettingsSwitchCard(
               title: 'Темная тема',
               value: isDark,
               onChanged: (value) {
                 context.read<ThemeCubit>().setThemeBrightness(
-                  value? Brightness.dark : Brightness.light,
-                );
+                      value ? Brightness.dark : Brightness.light,
+                    );
               },
+            ),
+          ),
+          const SliverToBoxAdapter(child: SizedBox(height: 16)),
+          SliverToBoxAdapter(
+            child: SettingsButtonCard(
+              title: 'Выход',
+              value: isDark,
+              onPressed: () async {
+                SharedPreferences pref = await SharedPreferences.getInstance();
+                pref.clear();
+              }, 
+              cardChild: Text(
+                "",
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
             ),
           ),
         ],

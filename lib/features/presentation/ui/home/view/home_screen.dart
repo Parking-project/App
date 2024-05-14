@@ -4,9 +4,8 @@ import 'package:auto_route/auto_route.dart';
 
 @RoutePage()
 class HomeScreen extends StatelessWidget {
-  // const HomeScreen({super.key});
+  const HomeScreen({super.key});
 
-  // final TextEditingController _title = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return AutoTabsRouter(

@@ -6,14 +6,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class SignInScreen extends StatelessWidget {
-  SignInScreen();
+  SignInScreen({super.key});
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController loginController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  Column getButtonState(BuildContext context, String message, bool is_button) {
-    if (is_button) {
+  Column getButtonState(BuildContext context, String message, bool isButton) {
+    if (isButton) {
       return Column(
         children: [
           FilledButton(

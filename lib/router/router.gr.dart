@@ -25,7 +25,7 @@ abstract class _$AppRouter extends RootStackRouter {
       final args = routeData.argsAs<PlaceSetRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: PlaceSetScreen(index: args.index),
+        child: PlaceSetScreen(reserveID: args.reserveid),
       );
     },
     ProfileRoute.name: (routeData) {
@@ -38,6 +38,12 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: RegisterScreen(),
+      );
+    },
+    ReserveAddRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: ReserveAddScreen(),
       );
     },
     ReserveHistoryRoute.name: (routeData) {
@@ -91,11 +97,11 @@ class HomeRoute extends PageRouteInfo<void> {
 /// [PlaceSetScreen]
 class PlaceSetRoute extends PageRouteInfo<PlaceSetRouteArgs> {
   PlaceSetRoute({
-    required int index,
+    required String reserveid,
     List<PageRouteInfo>? children,
   }) : super(
           PlaceSetRoute.name,
-          args: PlaceSetRouteArgs(index: index),
+          args: PlaceSetRouteArgs(reserveid: reserveid),
           initialChildren: children,
         );
 
@@ -106,13 +112,13 @@ class PlaceSetRoute extends PageRouteInfo<PlaceSetRouteArgs> {
 }
 
 class PlaceSetRouteArgs {
-  const PlaceSetRouteArgs({required this.index});
+  const PlaceSetRouteArgs({required this.reserveid});
 
-  final int index;
+  final String reserveid;
 
   @override
   String toString() {
-    return 'PlaceSetRouteArgs{index: $index}';
+    return 'PlaceSetRouteArgs{reserveid: $reserveid}';
   }
 }
 
@@ -140,6 +146,20 @@ class RegisterRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'RegisterRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ReserveAddScreen]
+class ReserveAddRoute extends PageRouteInfo<void> {
+  const ReserveAddRoute({List<PageRouteInfo>? children})
+      : super(
+          ReserveAddRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ReserveAddRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

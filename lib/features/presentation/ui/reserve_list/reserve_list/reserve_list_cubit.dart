@@ -13,10 +13,9 @@ class ReserveListCubit extends Cubit<ReserveListState> {
   void updateReserves() {
     final currentState = state;
     if (currentState is ReserveListLoaded) {
-      List<ReserveEntity> oldReserves = currentState.reserves;
 
-      int page_size = 10 * currentPage;
-      _repo.getPage([reserveState], 0, page_size).then(
+      int pageSize = 10 * currentPage;
+      _repo.getPage([reserveState], 0, pageSize).then(
         (response) {
           response.fold(
             (l) => null,
@@ -33,7 +32,6 @@ class ReserveListCubit extends Cubit<ReserveListState> {
   void addReserve(int begin, int end) {
     final currentState = state;
     if (currentState is ReserveListLoaded) {
-      List<ReserveEntity> oldReserves = currentState.reserves;
 
       _repo.addReserve(begin, end).then(
         (response) {
@@ -52,7 +50,6 @@ class ReserveListCubit extends Cubit<ReserveListState> {
     final currentState = state;
     if (currentState is ReserveListLoaded) {
       List<ReserveEntity> oldReserves = currentState.reserves;
-
       _repo.deleteReserve(oldReserves.elementAt(index).ID).then(
         (response) {
           response.fold(
@@ -69,11 +66,25 @@ class ReserveListCubit extends Cubit<ReserveListState> {
   int currentPage = 0;
   int reserveState = 2;
 
-  void setReserveState(int reserveState) {
+  void setReserveState(int? reserveState) {
     currentPage = 0;
-    this.reserveState = reserveState;
+    this.reserveState = reserveState??this.reserveState;
     emit(const ReserveListInitial());
     getReserve();
+  }
+
+  
+  void setPlace(String reserveID, String placeCode) {
+      _repo.setPlace(reserveID, placeCode).then(
+        (response) {
+          response.fold(
+            (l) => null,
+            (r) {
+              updateReserves();
+            },
+          );
+        },
+      );
   }
 
   void getReserve() {

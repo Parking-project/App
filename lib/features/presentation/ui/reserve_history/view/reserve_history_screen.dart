@@ -11,7 +11,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ReserveHistoryScreen extends StatelessWidget {
   final scrollController = ScrollController();
 
-  TextEditingController dropDownMenuController = TextEditingController();
+  final TextEditingController dropDownMenuController = TextEditingController();
+
+  ReserveHistoryScreen({super.key});
 
   void setupScrollController(context) {
     scrollController.addListener(() {
@@ -51,23 +53,8 @@ class ReserveHistoryScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Бронирования",
+              "История бронирований",
               style: Theme.of(context).textTheme.titleLarge,
-            ),
-            DropdownMenu(
-              onSelected: (value) {
-                final cubit = context.read<ReserveHistoryCubit>();
-                cubit.setReserveState(value ?? 2);
-                cubit.getReserve();
-              },
-              textStyle: Theme.of(context).textTheme.titleSmall,
-              initialSelection: 2,
-              dropdownMenuEntries: const [
-                DropdownMenuEntry(value: 1, label: "Удаленные"),
-                DropdownMenuEntry(value: 2, label: "Отправленные"),
-                DropdownMenuEntry(value: 3, label: "Одобренные"),
-                DropdownMenuEntry(value: 4, label: "Оплаченные")
-              ],
             ),
           ],
         ),
@@ -153,7 +140,7 @@ class ReserveHistoryScreen extends StatelessWidget {
       child: ReserveCard(
         reserve: reserve,
         child: Text(
-            "${reserve.state}",
+            reserve.state,
             style: Theme.of(context).textTheme.titleMedium,
           ),
       ),

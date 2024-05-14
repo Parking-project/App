@@ -7,7 +7,7 @@ class MessageModel {
 
   factory MessageModel.fromJson(Map<String, dynamic> json) {
     return MessageModel(
-      message: json["data"],
+      message: "${json["data"]}",
     );
   }
 }

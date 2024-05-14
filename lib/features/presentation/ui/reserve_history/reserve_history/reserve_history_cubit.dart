@@ -29,7 +29,7 @@ class ReserveHistoryCubit extends Cubit<ReserveHistoryState> {
 
     emit(ReserveHistoryLoading(oldReserves, isFirstFetch: currentPage == 0));
 
-    _repo.getPage([1,2,3,4], currentPage).then((response) {
+    _repo.getPage([1,2,3,4], currentPage, 10).then((response) {
       currentPage += 1;
 
       final reserves = (state as ReserveHistoryLoading).oldReserves;

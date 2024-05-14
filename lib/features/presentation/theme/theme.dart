@@ -23,24 +23,24 @@ const _textTheme = TextTheme(
   )
 );
 
-const _darkButtonTheme = ButtonThemeData(
-  buttonColor: Color.fromARGB(255, 255, 70, 70),
-);
 
-const _lightButtonTheme = ButtonThemeData(
-  buttonColor: Color.fromARGB(255, 140, 138, 255),
-);
 
 final darkTheme = ThemeData(
   useMaterial3: true,
   primaryColor: _primaryColor,
   textTheme: _textTheme,
   scaffoldBackgroundColor: const Color.fromARGB(255, 46, 41, 41),
+  canvasColor: const Color.fromARGB(255, 46, 41, 41),
   colorScheme: ColorScheme.fromSeed(
     seedColor: _primaryColor,
     brightness: Brightness.dark,
   ),
-  buttonTheme: _darkButtonTheme,
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+    selectedItemColor: Colors.red,
+    unselectedItemColor: Colors.white,
+
+    showUnselectedLabels: true,
+  ),
 );
 
 final lightTheme = ThemeData(
@@ -48,9 +48,15 @@ final lightTheme = ThemeData(
   primaryColor: _primaryColor,
   textTheme: _textTheme,
   scaffoldBackgroundColor: const Color(0xFFEFF1F3),
+  canvasColor: const Color(0xFFEFF1F3),
   colorScheme: ColorScheme.fromSeed(
     seedColor: _primaryColor,
     brightness: Brightness.light,
   ),
-  buttonTheme: _lightButtonTheme,
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+    selectedItemColor: Colors.red,
+    unselectedItemColor: Colors.black,
+
+    showUnselectedLabels: true,
+  ),
 );

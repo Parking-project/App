@@ -16,4 +16,8 @@ abstract class ReserveRepository {
     int begin,
     int end
   );
+  Future<Either<Fauiler, MessageEntity>> setPlace(
+    String rserveID,
+    String placeCode
+  );
 }

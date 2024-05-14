@@ -3,8 +3,9 @@ import 'package:dartz/dartz.dart';
 import 'package:app/core/error/failure.dart';
 
 abstract class PlaceRepository {
-  Future<Either<Fauiler, List<PlaceEntity>>> writeCar(
-    int limit,
-    String model,
+  Future<Either<Fauiler, List<PlaceEntity>>> getPage(
+    String reserveID,
+    int pageIndex,
+    int pageSize,
   );
 }

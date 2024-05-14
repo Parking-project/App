@@ -6,6 +6,7 @@ import 'package:app/features/presentation/ui/reserve_history/reserve_history.dar
 import 'package:app/features/presentation/ui/reserve_list/reserve_list.dart';
 import 'package:app/features/presentation/ui/settings/settings.dart';
 import 'package:app/features/presentation/ui/sign_in/sign_in.dart';
+import 'package:app/features/presentation/ui/reserve_add/reserve_add.dart';
 import 'package:app/features/presentation/ui/splash/splash.dart';
 import 'package:app/router/guard/auth_guard.dart';
 import 'package:auto_route/auto_route.dart';
@@ -45,6 +46,16 @@ class AppRouter extends _$AppRouter {
         ),
         AutoRoute(
           page: RegisterRoute.page,
+        ),
+        AutoRoute(
+          page: PlaceSetRoute.page,
+          guards: [AuthGuard()],
+          path: "/place_set",
+        ),
+        AutoRoute(
+          page: ReserveAddRoute.page,
+          guards: [AuthGuard()],
+          path: "/reserve_add",
         ),
         AutoRoute(
           page: PlaceSetRoute.page,

@@ -13,13 +13,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:app/features/domain/repository/user_api_repository.dart';
 import 'package:app/features/domain/repository/auth_api_repository.dart';
 import 'package:app/features/domain/repository/place_api_repository.dart';
-import 'package:app/features/domain/repository/message_api_repository.dart';
 import 'package:app/features/domain/repository/reserve_api_repository.dart';
 
 import 'package:app/features/data/repository/user_api_repository_impl.dart';
 import 'package:app/features/data/repository/auth_api_repository_impl.dart';
 import 'package:app/features/data/repository/place_api_repository_impl.dart';
-import 'package:app/features/data/repository/message_api_repository_impl.dart';
 import 'package:app/features/data/repository/reserve_api_repository_impl.dart';
 
 import 'package:app/features/presentation/ui/profile/bloc/user/user_cubit.dart';
@@ -29,7 +27,6 @@ import 'package:app/features/presentation/ui/register/bloc/register/register_cub
 final service = GetIt.instance;
 
 Future<void> init() async {
-  print("regiater shared");
   SharedPreferences pref = await SharedPreferences.getInstance();
   service.registerLazySingleton(
     () => pref
@@ -77,9 +74,6 @@ Future<void> init() async {
 
   service.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(),
-  );
-  service.registerLazySingleton<MessageRepository>(
-    () => MessageRepositoryImpl(),
   );
   service.registerLazySingleton<PlaceRepository>(
     () => PlaceRepositoryImpl(),

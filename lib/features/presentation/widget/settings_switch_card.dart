@@ -2,8 +2,8 @@ import 'package:app/features/presentation/widget/base_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class SettingsToggleCard extends StatelessWidget {
-  const SettingsToggleCard({
+class SettingsSwitchCard extends StatelessWidget {
+  const SettingsSwitchCard({
     super.key,
     required this.title,
     required this.value,
