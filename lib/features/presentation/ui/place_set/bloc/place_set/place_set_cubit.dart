@@ -8,10 +8,15 @@ part 'place_set_state.dart';
 class PlaceSetCubit extends Cubit<PlaceSetState> {
   PlaceSetCubit(this._repo) : super(const PlaceSetInitial());
 
+  void init(String reserve_id) {
+    emit(const PlaceSetLoaded([]));
+    getReserve(reserve_id);
+  }
+
   int currentPage = 0;
   final PlaceRepository _repo;
 
-  void setReserveState(String reserveID){
+  void setReserveState(String reserveID) {
     currentPage = 0;
     emit(const PlaceSetInitial());
     getReserve(reserveID);

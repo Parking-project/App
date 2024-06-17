@@ -20,7 +20,7 @@ class ReserveRepositoryImpl implements ReserveRepository {
       List<int> state, int pageIndex, int pageSize) async {
     try {
       final data = await service<Dio>().post(
-        '$_baseUrl/get_state',
+        "$_baseUrl/get_state",
         data: jsonEncode({
           "reserve_states": state,
           "page_index": pageIndex,
@@ -39,7 +39,7 @@ class ReserveRepositoryImpl implements ReserveRepository {
   Future<Either<Fauiler, MessageEntity>> deleteReserve(String reserveID) async{
     try {
       final data = await service<Dio>().post(
-        '$_baseUrl/delete',
+        "$_baseUrl/delete",
         data: jsonEncode({
           "reserve_id": reserveID,
         }),
@@ -54,7 +54,7 @@ class ReserveRepositoryImpl implements ReserveRepository {
   Future<Either<Fauiler, MessageEntity>> addReserve(int begin, int end) async{
     try {
       final data = await service<Dio>().post(
-        '$_baseUrl/post_dates',
+        "$_baseUrl/post_dates",
         data: jsonEncode({
           "begin": begin,
           "end": end,
@@ -70,7 +70,7 @@ class ReserveRepositoryImpl implements ReserveRepository {
   Future<Either<Fauiler, MessageEntity>> setPlace(String reserveID, String placeCode) async{
     try {
       final data = await service<Dio>().post(
-        '$_baseUrl/set_place',
+        "$_baseUrl/set_place",
         data: jsonEncode({
           "reserve_id": reserveID,
           "place_code": placeCode,

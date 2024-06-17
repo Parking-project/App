@@ -25,7 +25,7 @@ abstract class _$AppRouter extends RootStackRouter {
       final args = routeData.argsAs<PlaceSetRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: PlaceSetScreen(reserveID: args.reserveid),
+        child: PlaceSetScreen(args.reserveID),
       );
     },
     ProfileRoute.name: (routeData) {
@@ -61,7 +61,7 @@ abstract class _$AppRouter extends RootStackRouter {
     SettingsRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const SettingsScreen(),
+        child: SettingsScreen(),
       );
     },
     SignInRoute.name: (routeData) {
@@ -97,11 +97,11 @@ class HomeRoute extends PageRouteInfo<void> {
 /// [PlaceSetScreen]
 class PlaceSetRoute extends PageRouteInfo<PlaceSetRouteArgs> {
   PlaceSetRoute({
-    required String reserveid,
+    required String? reserveID,
     List<PageRouteInfo>? children,
   }) : super(
           PlaceSetRoute.name,
-          args: PlaceSetRouteArgs(reserveid: reserveid),
+          args: PlaceSetRouteArgs(reserveID: reserveID),
           initialChildren: children,
         );
 
@@ -112,13 +112,13 @@ class PlaceSetRoute extends PageRouteInfo<PlaceSetRouteArgs> {
 }
 
 class PlaceSetRouteArgs {
-  const PlaceSetRouteArgs({required this.reserveid});
+  const PlaceSetRouteArgs({required this.reserveID});
 
-  final String reserveid;
+  final String? reserveID;
 
   @override
   String toString() {
-    return 'PlaceSetRouteArgs{reserveid: $reserveid}';
+    return 'PlaceSetRouteArgs{reserveID: $reserveID}';
   }
 }
 

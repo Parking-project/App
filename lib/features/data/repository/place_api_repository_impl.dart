@@ -10,7 +10,7 @@ import 'package:app/core/error/failure.dart';
 import 'package:app/di/service.dart';
 
 class PlaceRepositoryImpl implements PlaceRepository {
-  final String _baseUrl = "/reserve";
+  final String _baseUrl = "/place";
   @override
   Future<Either<Fauiler, List<PlaceEntity>>> getPage(
     String reserveID,
@@ -19,7 +19,7 @@ class PlaceRepositoryImpl implements PlaceRepository {
   ) async {
     try {
       final data = await service<Dio>().post(
-        '$_baseUrl/get_free_id',
+        "$_baseUrl/get_free_id",
         data: jsonEncode({
           "reserve_id": reserveID,
           "page_index": pageIndex,
@@ -27,7 +27,7 @@ class PlaceRepositoryImpl implements PlaceRepository {
         }),
       );
 
-      return right((data.data as List)
+      return right((data.data["data"] as List)
           .map((json) => PlaceModel.fromJson(json).toEntity())
           .toList());
     } on DioException catch (_) {

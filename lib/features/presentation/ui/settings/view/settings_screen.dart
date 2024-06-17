@@ -1,3 +1,5 @@
+import 'package:app/di/service.dart';
+import 'package:app/features/domain/repository/tokens_repository.dart';
 import 'package:app/features/presentation/bloc/theme/theme_cubit.dart';
 import 'package:app/features/presentation/widget/base_container.dart';
 import 'package:app/features/presentation/widget/settings_button_card.dart';
@@ -5,11 +7,10 @@ import 'package:app/features/presentation/widget/settings_switch_card.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 @RoutePage()
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
+  const SettingsScreen();
 
   @override
   Widget build(BuildContext context) {
@@ -45,11 +46,12 @@ class SettingsScreen extends StatelessWidget {
               title: 'Выход',
               value: isDark,
               onPressed: () async {
-                SharedPreferences pref = await SharedPreferences.getInstance();
-                pref.clear();
+                TokensRepository tokensRepository = service<TokensRepository>();
+                tokensRepository.logOut();
+                context.router.popUntilRoot();
               }, 
               cardChild: Text(
-                "",
+                "Выход",
                 style: Theme.of(context).textTheme.titleSmall,
               ),
             ),

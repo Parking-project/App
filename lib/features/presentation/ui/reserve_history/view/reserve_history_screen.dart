@@ -13,7 +13,7 @@ class ReserveHistoryScreen extends StatelessWidget {
 
   final TextEditingController dropDownMenuController = TextEditingController();
 
-  ReserveHistoryScreen({super.key});
+  ReserveHistoryScreen();
 
   void setupScrollController(context) {
     scrollController.addListener(() {

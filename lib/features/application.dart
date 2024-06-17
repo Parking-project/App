@@ -27,16 +27,16 @@ class _ApplicationState extends State<Application> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => ThemeCubit(settingsRepository: service()),
+          create: (context) => ThemeCubit(service()),
         ),
         BlocProvider(
           create: (context) => UserCubit(service())..init(),
         ),
         BlocProvider(
-          create: (context) => RegisterCubit(service())..init(),
+          create: (context) => RegisterCubit(service(), service())..init(),
         ),
         BlocProvider(
-          create: (context) => SignInCubit(service())..init(),
+          create: (context) => SignInCubit(service(), service())..init(),
         ),
         BlocProvider(
           create: (context) => ReserveListCubit(service())..getReserve(),

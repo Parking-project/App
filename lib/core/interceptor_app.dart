@@ -1,14 +1,22 @@
 import 'package:app/di/service.dart';
+import 'package:app/features/domain/repository/tokens_repository.dart';
 import 'package:dio/dio.dart';
-import 'package:app/core/get_storage_keys.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class InterceptorsApp extends QueuedInterceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     options.headers["Accept"] = "application/json";
-    String? token = service<SharedPreferences>().getString(GetStorageKeys.accessToken);
-    options.headers["Authorization"] = 'Bearer $token';
+
+    TokensRepository tokenRepository = service<TokensRepository>();
+    String token = "";
+    if(options.path.contains("/token/refresh")){
+      token = tokenRepository.getRefreshToken();
+    }
+    else{
+      token = tokenRepository.getAccessToken();
+    }
+    options.headers["Authorization"] = "Bearer " + token;
+
     super.onRequest(options, handler);
   }
 
@@ -20,19 +28,21 @@ class InterceptorsApp extends QueuedInterceptor {
   }
 
   @override
-  void onError(DioException error, ErrorInterceptorHandler handler) async {
-    super.onError(error, handler);
-    SharedPreferences pref = service<SharedPreferences>();
-    if (error.response?.statusCode == 401) {
+  void onError(DioException err, ErrorInterceptorHandler handler) async {
+    super.onError(err, handler);
+    TokensRepository tokenRepository = service<TokensRepository>();
+    if (err.response?.statusCode == 401) {
       try {
         final data = await service<Dio>().get(
           '/token/refresh',
         );
-        await pref.setString(
-            GetStorageKeys.accessToken, data.data["tokens"]["access"]);
+        tokenRepository.setTokens(data.data["tokens"]["access"], tokenRepository.getRefreshToken());
       } on DioException catch (_) {
-        await pref.clear();
+        await tokenRepository.logOut();
       }
+    }
+    else{
+        await tokenRepository.logOut();
     }
   }
 }

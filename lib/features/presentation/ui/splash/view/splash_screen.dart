@@ -7,7 +7,7 @@ import 'package:auto_route/auto_route.dart';
 
 @RoutePage()
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+  const SplashScreen();
 
   @override
   State<StatefulWidget> createState() => _SplashScreenState();
@@ -69,11 +69,11 @@ class _SplashScreenState extends State<SplashScreen> {
                     height: 20,
                   ),
                   Text(
-                    "Example",
+                    "Parking",
                     style: TextStyle(
-                        fontStyle: FontStyle.italic,
-                        color: Colors.white,
-                        fontSize: 32),
+                      fontStyle: FontStyle.italic,
+                      fontSize: 32,
+                    ),
                   )
                 ],
               ),

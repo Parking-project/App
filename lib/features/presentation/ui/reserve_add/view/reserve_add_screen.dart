@@ -15,7 +15,7 @@ class ReserveAddScreen extends StatelessWidget {
   final TextEditingController begin = TextEditingController();
   final TextEditingController end = TextEditingController();
 
-  ReserveAddScreen({super.key});
+  ReserveAddScreen();
 
   Column getButtonState(BuildContext context, String message, bool isButton) {
     if (isButton) {
@@ -27,6 +27,10 @@ class ReserveAddScreen extends StatelessWidget {
                 final beginTimestamp = DateTime.parse(begin.text).microsecondsSinceEpoch;
                 final endTimestamp = DateTime.parse(end.text).microsecondsSinceEpoch;
                 
+                if(beginTimestamp >= endTimestamp){
+                  return;
+                }
+
                 context
                     .read<ReserveAddCubit>()
                     .addReserve((beginTimestamp/1000000).round(), (endTimestamp/1000000).round());
@@ -68,7 +72,6 @@ class ReserveAddScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         title: Text(
           "Окно создания бронирования",
           style: Theme.of(context).textTheme.titleLarge,
@@ -176,8 +179,9 @@ class ReserveAddScreen extends StatelessWidget {
                             ),
                           ReserveAddSuccess() => Builder(
                               builder: (context) {
-                                context.router.push(const ReserveListRoute());
+                                context.read<ReserveAddCubit>().init();
                                 context.read<ReserveListCubit>().updateReserves();
+                                context.router.push(const ReserveListRoute());
                                 return getButtonState(context, "", true);
                               },
                             ),

@@ -6,12 +6,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class RegisterScreen extends StatelessWidget {
-  RegisterScreen({super.key});
+  RegisterScreen();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController loginController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController reapetPasswordController = TextEditingController();
 
   Widget getButtonState(BuildContext context, String message, bool isButton) {
     if (isButton) {
@@ -167,6 +168,7 @@ class RegisterScreen extends StatelessWidget {
                         height: 95,
                         child: TextFormField(
                           enabled: state is RegisterInitial || state is RegisterException,
+                          controller: reapetPasswordController,
                           keyboardType: TextInputType.visiblePassword,
                           decoration: const InputDecoration(
                             labelText: "Проверка пароль",
@@ -204,6 +206,10 @@ class RegisterScreen extends StatelessWidget {
                             ),
                           RegisterSuccess() => Builder(
                               builder: (context) {
+                                loginController.text = "";
+                                passwordController.text = "";
+                                nameController.text = "";
+                                reapetPasswordController.text = "";
                                 context.router.push(const ProfileRoute());
                                 context.read<RegisterCubit>().init();
                                 return getButtonState(context, "", true);

@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class SignInScreen extends StatelessWidget {
-  SignInScreen({super.key});
+  SignInScreen();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController loginController = TextEditingController();
@@ -154,6 +154,8 @@ class SignInScreen extends StatelessWidget {
                             ),
                           SignInSuccess() => Builder(
                               builder: (context) {
+                                loginController.text = "";
+                                passwordController.text = "";
                                 context.router.push(const ProfileRoute());
                                 context.read<SignInCubit>().init();
                                 return getButtonState(context, "", true);

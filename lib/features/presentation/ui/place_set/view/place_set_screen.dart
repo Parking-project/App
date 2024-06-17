@@ -4,26 +4,26 @@ import 'package:app/features/domain/entity/place_api_entity.dart';
 import 'package:app/features/presentation/ui/place_set/bloc/place_set/place_set_cubit.dart';
 import 'package:app/features/presentation/ui/reserve_list/reserve_list/reserve_list_cubit.dart';
 import 'package:app/features/presentation/widget/place.dart';
+import 'package:app/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class PlaceSetScreen extends StatelessWidget {
-  PlaceSetScreen({super.key, required this.reserveID});
+  PlaceSetScreen(this.reserveID);
 
-  final String reserveID;
+  final String? reserveID;
 
   final scrollController = ScrollController();
 
   final TextEditingController dropDownMenuController = TextEditingController();
 
-
   void setupScrollController(context) {
     scrollController.addListener(() {
       if (scrollController.position.atEdge) {
         if (scrollController.position.pixels != 0) {
-          BlocProvider.of<ReserveListCubit>(context).getReserve();
+          BlocProvider.of<PlaceSetCubit>(context).getReserve(reserveID ?? "");
         }
       }
     });
@@ -48,11 +48,14 @@ class PlaceSetScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     setupScrollController(context);
+    if (reserveID == null) {
+      context.router.popUntilRouteWithName(ReserveListRoute.name);
+    }
+    BlocProvider.of<PlaceSetCubit>(context).setReserveState(reserveID ?? "");
 
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0.5,
-        automaticallyImplyLeading: false,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -68,19 +71,19 @@ class PlaceSetScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           FloatingActionButton(
-            heroTag: "scrollUp",
+            heroTag: "scrollUpPlace",
             onPressed: () => _scrollUp(),
             child: const Icon(Icons.arrow_upward),
           ),
           FloatingActionButton(
-            heroTag: "updateData",
+            heroTag: "updateDataPlace",
             onPressed: () {
-              context.read<PlaceSetCubit>().setReserveState(reserveID);
+              context.read<PlaceSetCubit>().setReserveState(reserveID ?? "");
             },
             child: const Icon(Icons.loop),
           ),
           FloatingActionButton(
-            heroTag: "scrollDown",
+            heroTag: "scrollDownPlace",
             onPressed: () {
               context.read<ReserveListCubit>().getReserve();
               _scrollDown();
@@ -139,23 +142,23 @@ class PlaceSetScreen extends StatelessWidget {
 
   Widget _places(PlaceEntity place, index, BuildContext context) {
     final reserveAction = Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Text(""),
-          FilledButton(
-            onPressed: () {
-              context.read<ReserveListCubit>().setPlace(
-                reserveID, place.placeCode
-              );
-              context.router.removeLast();
-            },
-            child: Text(
-              "Выбрать",
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        const Text(""),
+        FilledButton(
+          onPressed: () {
+            context
+                .read<ReserveListCubit>()
+                .setPlace(reserveID ?? "", place.placeCode);
+            context.router.removeLast();
+          },
+          child: Text(
+            "Выбрать",
+            style: Theme.of(context).textTheme.titleSmall,
           ),
-        ],
-      );
+        ),
+      ],
+    );
 
     return Container(
       width: MediaQuery.of(context).size.width,

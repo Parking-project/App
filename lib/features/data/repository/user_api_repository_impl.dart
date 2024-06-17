@@ -15,7 +15,7 @@ class UserRepositoryImpl implements UserRepository {
   Future<Either<Fauiler, UserEntity>> getUser() async {
     try {
       final data =
-          await service<Dio>().get('$baseUrl/get');
+          await service<Dio>().get("$baseUrl/get");
 
       return right(
         UserModel.fromJson(data.data).toEntity()

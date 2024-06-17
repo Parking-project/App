@@ -14,7 +14,7 @@ class ReserveListScreen extends StatelessWidget {
 
   final TextEditingController dropDownMenuController = TextEditingController();
 
-  ReserveListScreen({super.key});
+  ReserveListScreen();
 
   void setupScrollController(context) {
     scrollController.addListener(() {
@@ -186,7 +186,7 @@ class ReserveListScreen extends StatelessWidget {
               FilledButton(
                 onPressed: () {
                   // context.router.push(PlaceSetRoute(index: index));
-                  context.router.push(PlaceSetRoute(reserveid: reserve.ID));
+                  context.router.push(PlaceSetRoute(reserveID: reserve.ID));
                 },
                 child: Text(
                   "Парковочные места",
