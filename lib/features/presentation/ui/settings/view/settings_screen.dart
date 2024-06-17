@@ -1,9 +1,11 @@
 import 'package:app/di/service.dart';
 import 'package:app/features/domain/repository/tokens_repository.dart';
 import 'package:app/features/presentation/bloc/theme/theme_cubit.dart';
+import 'package:app/features/presentation/ui/splash/splash.dart';
 import 'package:app/features/presentation/widget/base_container.dart';
 import 'package:app/features/presentation/widget/settings_button_card.dart';
 import 'package:app/features/presentation/widget/settings_switch_card.dart';
+import 'package:app/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,7 +50,7 @@ class SettingsScreen extends StatelessWidget {
               onPressed: () async {
                 TokensRepository tokensRepository = service<TokensRepository>();
                 tokensRepository.logOut();
-                context.router.popUntilRoot();
+                context.router.push(const SplashRoute());
               }, 
               cardChild: Text(
                 "Выход",
